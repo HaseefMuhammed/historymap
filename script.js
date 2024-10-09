@@ -15,13 +15,6 @@ closeButton.addEventListener("click", () => {
 
 
 
-document.getElementById('playButton').addEventListener('click', function() {
-  var audio = document.getElementById('myAudio');
-  audio.play().catch(function(error) {
-      console.log('Play was prevented:', error);
-  });
-});
-
 
 // IMG GALLER
 
