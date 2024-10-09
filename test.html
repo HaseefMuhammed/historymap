@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text-to-Speech - Malayalam (Without API)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Browser TTS with Available Voices</h1>
+    <p id="textToRead">ഇത് മലയാളത്തിൽ വാക്കുകൾ വായിക്കുന്നതിന് ഉദാഹരണ മാതൃകയാണ്.</p>
+
+    <button id="readButton">Read Text</button>
+    <button id="stopButton" disabled>Stop Reading</button>
+
+    <script>
+        let synth = window.speechSynthesis;
+        let selectedVoice = null;
+
+        const readButton = document.getElementById('readButton');
+        const stopButton = document.getElementById('stopButton');
+        const textToRead = document.getElementById('textToRead').innerText;
+
+        // Load available voices
+        const loadVoices = () => {
+            const voices = synth.getVoices();
+            console.log("Available voices: ", voices);
+            
+            // Check if a Malayalam voice is available
+            const malayalamVoice = voices.find(voice => voice.lang === 'ml-IN');
+            if (malayalamVoice) {
+                selectedVoice = malayalamVoice;
+            } else {
+                // Fallback to an Indian English voice if Malayalam is unavailable
+                selectedVoice = voices.find(voice => voice.lang.startsWith('en-IN')) || voices[0];
+            }
+        };
+
+        // Ensure voices are loaded
+        if (synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = loadVoices;
+        }
+
+        // Function to start reading
+        const readText = () => {
+            if (selectedVoice) {
+                let utterance = new SpeechSynthesisUtterance();  // Create a new utterance each time
+                utterance.voice = selectedVoice;
+                utterance.text = textToRead;
+                utterance.pitch = 1;  // Adjust the pitch to sound more natural
+                utterance.rate = 1;   // Normal speed
+
+                // Handle events
+                utterance.onend = () => {
+                    stopButton.disabled = true;
+                    readButton.disabled = false;
+                };
+
+                // Speak the text
+                synth.speak(utterance);
+                readButton.disabled = true;
+                stopButton.disabled = false;
+            } else {
+                alert("No suitable voice found. Please try in a different browser.");
+            }
+        };
+
+        // Read the text when "Read Text" is clicked
+        readButton.addEventListener('click', () => {
+            readText();
+        });
+
+        // Stop reading when "Stop Reading" is clicked
+        stopButton.addEventListener('click', () => {
+            synth.cancel();  // Cancel any ongoing speech
+            stopButton.disabled = true;
+            readButton.disabled = false;
+        });
+    </script>
+
+</body>
+</html>

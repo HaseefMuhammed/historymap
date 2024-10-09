@@ -1,0 +1,56 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Malayalam:wght@100..900&display=swap');
+.logo{
+  width: 3em;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+.brand-name{
+  font-weight: bolder;
+  font-size: 1.5em;
+  color: white;
+  text-transform: uppercase;
+}
+.banner img{
+  border-radius: 10px;
+}
+.intro p{
+  font-family: "Noto Serif Malayalam", serif;
+  font-optical-sizing: auto;
+  font-weight: bolder;
+  font-style: normal;
+  font-size: 1.5em;
+  margin: 5px;
+  text-align: center;
+}
+.video{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;  
+  width: 90%;
+  box-shadow: 10px 10px 8px black;
+}
+.cnt p{
+  font-style: italic;
+  margin: 10px;
+  font-size: 1.5em;
+  font-family: "Noto Serif Malayalam", serif;
+  font-optical-sizing: auto;
+}
+
+/* Image gallery */
+
+.gallery img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.gallery img:hover {
+  transform: scale(1.05);
+}
+
+dialog{
+  border-radius: 10px;
+  text-align: center;
+}
